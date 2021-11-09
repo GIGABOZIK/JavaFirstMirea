@@ -20,7 +20,7 @@ public class SortInsert {
     }
     public static void main(String[] args) {
         Random rand = new Random();
-        int stuNumber = 7;
+        int stuNumber = 10;
         String[] names = {"Joe","John","Max","Bob","Ivan","Stan","Ann","Jess","Antony","Eugene"};
         Student[] stu = new Student[stuNumber];
         int[] iDNumber = new int[stu.length];
