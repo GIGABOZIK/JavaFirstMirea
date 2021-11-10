@@ -16,7 +16,7 @@ public class TestArrayList {
     }
 
     public static void main(String[] args) {
-        int stuNumber = 10; // Кол-во студентов
+        int stuNumber = 5; // Кол-во студентов
         String[] names = {"Joe","John","Max","Bob","Ivan","Stan","Ann","Jess","Antony","Eugene"};
         Random rand = new Random();
         // 1) Создание ArrayList
