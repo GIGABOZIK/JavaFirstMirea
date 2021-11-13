@@ -1,13 +1,13 @@
-package ru.mirea.task13.opt1;
+package ru.mirea.task13.opt3;
 
 import ru.mirea.task12.Student;
+// import ru.mirea.task13.opt3.SelfArrayList; // Типа импорт
 
-import java.util.ArrayList;
 import java.util.Random;
 
-public class TestArrayList {
+public class TestSelfArrayList {
 
-    public static void listOut(ArrayList<Student> stu)
+    public static void listOut(SelfArrayList<Student> stu)
     {
         for (int i = 0; i < stu.size(); i++)
         {
@@ -21,10 +21,10 @@ public class TestArrayList {
         String[] names = {"Joe","John","Max","Bob","Ivan","Stan","Ann","Jess","Antony","Eugene"};
         Random rand = new Random();
         // 1) Создание ArrayList
-        ArrayList<Student> stu = new ArrayList<>();
+        SelfArrayList<Student> stu = new SelfArrayList<>();
         System.out.println("Список создан. Добавляем элементы:");
         for (int i = 0; i < stuNumber; i++) {
-            // 2) Добавление элементов
+            // 2) Добавление элементов в конец
             stu.add(new Student(
                 rand.nextInt(stuNumber * 100),
                 names[rand.nextInt(names.length)],
