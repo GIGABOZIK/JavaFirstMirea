@@ -30,7 +30,6 @@ public class DrunkerStack {
                 cards.push(4);
                 cards.push(2);
             }
-            // Игрок 2 - Вар2
             default -> { // Ручной ввод
                 Scanner sc = new Scanner(System.in);
                 for (int i = 0; i < 5; i++) {
