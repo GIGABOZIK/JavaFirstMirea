@@ -1,11 +1,9 @@
 <h1 style="text-align: center;">Индивидуальный проект:</h1>
 <h2 style="text-align: center;">Название: "Банк CashOffee"</h2>
 
-<h3>Описание:</h3>
 <pre>
 
-<div style="border: 2px solid #5020F0; border-radius: 7px;">
-
+<div style="border: 2px solid #5020F0; border-radius: 7px; padding: 10px;">
     1) <b>Запуск - Вход</b>
         1.1) Приветствие
         1.2) Авторизация - Выбор пользователя (Сотрудник банка \ Пользователь)
@@ -19,8 +17,7 @@
 
 <hr/>
 
-<div style="border: 2px solid #5020F0; border-radius: 7px;">
-
+<div style="border: 2px solid #5020F0; border-radius: 7px; padding: 10px;">
     2) <b>Главное меню</b>
         2.1) Меню для сотрудника банка
             *2.2.1) Общение с клиентом
@@ -53,18 +50,21 @@
 
 <hr/>
 
-<div style="border: 2px solid #5020F0; border-radius: 7px;">
-
+<div style="border: 2px solid #5020F0; border-radius: 7px; padding: 10px;">
     3) <b>Выход из приложения</b>
 
 </div>
 
 <hr/>
 
+<div style="border: 2px solid #5020F0; border-radius: 7px; padding: 10px;">
 * - Возможно...
 
-<h3>! Дополнительно:</h3>
-Хранение данных для многократного использования будет
-реализовано с помощью текстовой базы данных
+</div>
+
+<h3>
+! Дополнительно:
+</h3>
+Хранение данных для будет реализовано с помощью текстовой базы данных
 
 </pre>
