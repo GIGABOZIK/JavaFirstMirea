@@ -1,4 +1,4 @@
-package ru.mirea.task17.examples.package01;
+package ru.mirea.task17.examples.Package01;
 
 // Пример, Перечисление сортов яблок
 enum Apple {

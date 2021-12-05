@@ -1,4 +1,4 @@
-package ru.mirea.task17.examples.package04;
+package ru.mirea.task17.examples.Package04;
 
 import java.util.Random;
 
