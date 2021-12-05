@@ -2,12 +2,12 @@ package ru.mirea.task17;
 
 public enum Operations {
     Help ("Получить список доступных операций", true),
+    Exit ("Выход из приложения", true),
     //Last ("Повторить последнюю операцию", false),
     //Start ("Начало работы", true),
-    Auth ("Авторизация", true),
+    LogIn ("Авторизация", true),
     SignUp ("Регистрация", true),
     LogOut ("Выход из аккаунта", false),
-    Exit ("Выход из приложения", true),
     CheckBalance ("Проверить баланс", false),
     Transfer ("Платежи / Перевод средств", false),
     History ("История движения средств", false),

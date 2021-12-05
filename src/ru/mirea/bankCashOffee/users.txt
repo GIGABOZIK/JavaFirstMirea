@@ -1,0 +1,3 @@
+id; namF; namL; log; pwd; isEmp; walletId
+1; Ivan; Belyaev; sad; bird; false; 1
+2; John; Below; meow; boy; false; 2
