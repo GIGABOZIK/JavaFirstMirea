@@ -9,7 +9,7 @@ public class Inputter {
         Scanner sc = new Scanner(System.in);
         String inputText;
         try {
-            FileWriter fW = new FileWriter("src/task15/opt3one/gfile_15_3.txt");
+            FileWriter fW = new FileWriter("src/ru/mirea/task15/opt3/gfile_15_3.txt");
             System.out.println("Enter smth:");
             inputText = sc.nextLine();
             do {
