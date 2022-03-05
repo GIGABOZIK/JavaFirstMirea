@@ -1,0 +1,5 @@
+#Ввод 004:
+#commentario
+int leVar = (-123 + 43) / 25 ** a;3
+String sweet = "my string";3
+
