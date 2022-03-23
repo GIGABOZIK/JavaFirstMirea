@@ -75,6 +75,8 @@ public class Lexer {
         tokens.put("LOGIC_OR", Pattern.compile("\\|\\|")); //
         // cond ? (a_if_true) : (b_if_false) //
 
+        //+++++ ++ -- += -=...
+
         tokens.put("ASSIGN_OP", Pattern.compile("=")); //
 
         tokens.put("SEP_END_LINE", Pattern.compile("(;3)")); // * хз
@@ -105,7 +107,7 @@ public class Lexer {
             // Подключение файла
             Scanner sc = null;
             try {
-                sc = new Scanner(new File("src/razrpop/dsl/flexer/somecode.txt"));
+                sc = new Scanner(new File("src/razrpop/dsl/somecode.txt"));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -122,63 +124,13 @@ public class Lexer {
         if (strList.isEmpty()) return;
 
         //* Проверка порядка токенов
-        System.out.println(tokens);
+        // System.out.println(tokens);
 //        for (Token t : lxr.tokList) System.out.println(t);
         //*
 
         // Обработка введенных данных
         for (String strG : strList) {
             // Обработка строки
-
-            //* Обработка строка #3
-//            String subStrG = strG;
-//            while (!subStrG.isEmpty()) {
-//                for (String tokName : tokens.keySet()) {
-//                    Pattern rgxPtn = tokens.get(tokName);
-//                    Matcher rgxMtr = rgxPtn.matcher(subStrG);
-//                    while (rgxMtr.find()) {
-////                        System.out.print(tokName + " : "); //*
-//                        String tokValue = subStrG.substring(rgxMtr.start(), rgxMtr.end());
-//                        Token newTok = new Token(tokName, tokValue);
-//                        tokList.add(newTok);
-//                        System.out.println(newTok);
-//                        subStrG = subStrG.substring(rgxMtr.end());
-//                        break;
-//                    }
-////                    System.out.println(" gg ");
-//                }
-//            }
-//            System.out.println("EOL");
-            //*
-
-            //* Обработка строки #4
-//            for (String tokName : tokens.keySet()) {
-//                Pattern rgxPtn = tokens.get(tokName);
-//                Matcher rgxMtr = rgxPtn.matcher(strG);
-//                if (rgxMtr.find()) {
-////                    System.out.print(tokName + " : "); //*
-//                    String tokValue = strG.substring(rgxMtr.start(), rgxMtr.end());
-//                    Token newTok = new Token(tokName, tokValue);
-//                    tokList.add(newTok);
-//                    System.out.println(newTok);
-//                }
-//            }
-            //*
-
-            //* Обработка строки #5
-//            for (String tokName : tokens.keySet()) {
-//                Pattern rgxPtn = tokens.get(tokName);
-//                Matcher rgxMtr = rgxPtn.matcher(strG);
-////                System.out.println("Token - " + tokName + ":");
-//                while (rgxMtr.find()) {
-//                    String tokValue = strG.substring(rgxMtr.start(), rgxMtr.end());
-//                    Token newTok = new Token(tokName, tokValue);
-//                    tokList.add(newTok);
-//                    System.out.println(newTok);
-//                }
-//            }
-//            System.out.println("EOL");
-            //*
             //* Обработка строки #6
             strProcessor(lxr, strG);
             System.out.println("EOL");
