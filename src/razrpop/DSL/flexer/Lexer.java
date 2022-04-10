@@ -7,17 +7,10 @@ import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+// Lexer
 public class Lexer {
     private static final LinkedHashMap<String, Pattern> tokens = new LinkedHashMap<String, Pattern>();
-
     static {
-        // Константы: числа/строки ( 2 0.11 "Текстик да" )
-        // Имена переменных \ функций: VAR FUNC_NAME
-        // Ключевые слова: KW double float int string do if else while for and or break True False print
-        // Знаки операций: + - =
-        // Разделители: ; [] ,
-        //
         tokens.put("OL_COMMENT", Pattern.compile("#.*")); // *
         // multi_line_comment // *
 
@@ -35,7 +28,12 @@ public class Lexer {
         // to // *
         tokens.put("KW_READ", Pattern.compile("read")); // *
         tokens.put("KW_WRITE", Pattern.compile("write")); // *
-        // KW BOOL,INT,STRING..
+        //******** KW BOOL,INT,STRING..
+        tokens.put("KW_VAR", Pattern.compile("Var")); // *
+        tokens.put("KW_BOOL", Pattern.compile("Bool")); // *
+        tokens.put("KW_INT", Pattern.compile("Int")); // *
+        tokens.put("KW_STRING", Pattern.compile("String")); // *
+        //******** KW BOOL,INT,STRING..
         tokens.put("KW_LOGIC_AND", Pattern.compile("and")); // *
         tokens.put("KW_LOGIC_OR", Pattern.compile("or")); // *
 
@@ -45,15 +43,16 @@ public class Lexer {
         tokens.put("IDENT", Pattern.compile("[a-z]([a-zA-Z\\d])*")); //
         tokens.put("INT", Pattern.compile("0|(-?[1-9](\\d)*)")); //
         tokens.put("STRING", Pattern.compile("\"(.*)\"")); //
-//        tokens.put("STRING", Pattern.compile("\"[\\s0-9a-zA-Z!@#№$;%^:&?*()\\-_=+\\\\|/\\[\\]{}<>']*\"")); //
-        tokens.put("FUNC_NAME", Pattern.compile("[a-zA-Z][a-zA-Z0-9]*\\([.]*\\)")); // хз пока
+//        tokens.put("FUNC_NAME", Pattern.compile("[a-zA-Z][a-zA-Z0-9]*\\([.]*\\)")); // хз пока
 
         // COMMENT
 
+        /*
         tokens.put("KW_VAR", Pattern.compile("Var")); // *
         tokens.put("KW_BOOL", Pattern.compile("Bool")); // *
         tokens.put("KW_INT", Pattern.compile("Int")); // *
         tokens.put("KW_STRING", Pattern.compile("String")); // *
+         */
 
 //        tokens.put("MATH_OP", Pattern.compile("\\+-|\\*{1,2}|/|\\^|%")); // 1
 
@@ -65,7 +64,7 @@ public class Lexer {
         // Преобразование типа //
         tokens.put("ADD_OP", Pattern.compile("\\+")); //
         tokens.put("SUB_OP", Pattern.compile("-")); //
-        // Сдвиг влево \ вправо в 2 с.с. //
+        // Битовый Сдвиг влево-вправо //
         tokens.put("COMP_VAL", Pattern.compile("<=?|>=?")); //
         tokens.put("COMP_EQL", Pattern.compile("==|!=")); //
         tokens.put("B_AND", Pattern.compile("&")); //
@@ -93,26 +92,33 @@ public class Lexer {
         tokens.put("SEP_QUOTE", Pattern.compile("['\"]")); // хз
         //
     }
-
     private LinkedList<Token> tokList = new LinkedList<>();
-
+// main
     public static void main(String[] args) {
-        LinkedList<String> strList = new LinkedList<>();
         Lexer lxr = new Lexer();
-//        LinkedList<Token> tokList = new LinkedList<>();
-
-        // Ввод
-            // Подключение консоли
-//            Scanner sc = new Scanner(System.in);
-            // Подключение файла
-            Scanner sc = null;
-            try {
-                sc = new Scanner(new File("src/razrpop/dsl/somecode.txt"));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+//        lxr.getTokens();
+        lxr.getTokens();
+    }
+// readInput
+    private LinkedList<String> readInput() {
+        System.out.println("Выбери тип ввода: (0 - файл, 1 - консоль)");
+        Scanner sc = new Scanner(System.in);
+        switch (sc.nextInt()) {
+            case 0 -> {
+                System.out.println("INPUT - FILE");
+                sc = null;
+                try {
+                    sc = new Scanner(new File("src/razrpop/dsl/somecode.txt"));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
-            //
-        System.out.println("Enter smth");
+            case 1 -> {
+                System.out.println("INPUT - CONSOLE");
+                sc = new Scanner(System.in);
+            }
+        }
+        LinkedList<String> strList = new LinkedList<>();
         for (int i = 0; true; i++) {
             strList.add(i, sc.nextLine());
             if (strList.get(i).isEmpty()) {
@@ -120,70 +126,45 @@ public class Lexer {
                 break;
             }
         }
+        return strList;
+    }
+// getTokens
+    public LinkedList<Token> getTokens() {
+        LinkedList<String> strList;
+        LinkedList<Token> tokList = new LinkedList<>();
+        // Ввод
+        strList = readInput();
+        //
         System.out.println("Your input:\n " + strList); // Проверка ввода
-        if (strList.isEmpty()) return;
-
-        //* Проверка порядка токенов
-        // System.out.println(tokens);
-//        for (Token t : lxr.tokList) System.out.println(t);
-        //*
-
+        if (strList.isEmpty()) return tokList;
+        //
         // Обработка введенных данных
         for (String strG : strList) {
-            // Обработка строки
-            //* Обработка строки #6
-            strProcessor(lxr, strG);
-            System.out.println("EOL");
-//          //*
-        }
-        System.out.println("\nRESULT:\n");
-        for (Token token : lxr.tokList) System.out.println(token);
-    }
-
-    private static void strProcessor (Lexer lxr, String strG) {
-        if (strG.isEmpty()) return;
-        int pos = 0;
-        int tokCnt = 0;
-        for (String tokName : tokens.keySet()) {
-            Pattern rgxPtn = tokens.get(tokName);
-            Matcher rgxMtr = rgxPtn.matcher(strG);
-            if (rgxMtr.find()) {
-                if (rgxMtr.start() == pos) {
-                    tokCnt++;
-                    pos = rgxMtr.end();
-                    String tokValue = strG.substring(rgxMtr.start(), rgxMtr.end());
-//                    Token newTok = new Token(tokName, tokValue, rgxMtr.start(), rgxMtr.end());
-                    Token newTok = new Token(tokName, tokValue);
-//                    if (!tokName.equals("SPACE"))
-                        System.out.println(newTok);
-                    lxr.tokList.add(newTok);
+            while (!strG.isEmpty()) {
+                int pos = 0;
+                int tokCnt = 0;
+                for (String tokName : tokens.keySet()) {
+                    Pattern rgxPtn = tokens.get(tokName);
+                    Matcher rgxMtr = rgxPtn.matcher(strG);
+                    if (rgxMtr.find()) {
+                        if (rgxMtr.start() == pos) {
+                            tokCnt++;
+                            pos = rgxMtr.end();
+                            String tokValue = strG.substring(rgxMtr.start(), rgxMtr.end());
+                            Token newTok = new Token(tokName, tokValue);
+    //                    if (!tokName.equals("SPACE"))
+//                            System.out.println(newTok);
+                            tokList.add(newTok);
+                        }
+                    }
                 }
+                if (tokCnt == 0) pos++;
+                strG = strG.substring(pos);
             }
+//            System.out.println("EOL");
         }
-        if (tokCnt == 0) pos++;
-        strProcessor(lxr, strG.substring(pos));
+//        System.out.println("\nRESULT:\n");
+//        for (Token token : tokList) System.out.println(token);
+        return tokList;
     }
 }
-
-    /*
-Ввод 000:
-go code with me
-lets try again
-ill show you some magic
-
-Ввод 001:
-a40;3
-
-Ввод 002:
-som4juice = 23 + 72f * (myLexer);
-
-Ввод 003:
-#commentario
-int leVar = -123 + 43;3
-
-Ввод 004:
-#commentario
-int leVar = (-123 + 43) / 25 ** a;3
-String sweet = "my string";3
-
-    */
